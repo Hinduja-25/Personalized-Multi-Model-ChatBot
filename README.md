@@ -65,7 +65,6 @@ ChatBot/
 │   │   │       └── azureOpenAiProvider.js # Azure OpenAI adapter
 │   │   └── server.js            # Express entry point & route mounting
 │   ├── .env                     # Server environment variables (secrets)
-│   ├── .env.example             # Documented template for configuration
 │   └── package.json
 └── client/                      # React + Vite Frontend
     ├── src/
@@ -102,11 +101,11 @@ JWT_EXPIRES_IN=7d
 DEFAULT_MODEL=gemini-3-1-pro
 
 # Google Gemini API (Gemini 3.1 Pro Preview & Gemini 3.8 Flash)
-GOOGLE_GEMINI_API_KEY="AIzaSy..."
+GOOGLE_GEMINI_API_KEY="-----"
 
 # Azure Cloud OpenAI (Sol 6.1 & Luna 6)
-AZURE_CLOUD_OPENAI_GPT61SOL_CREDENTIALS='[{"azureOpenAIApiDeploymentName":"gpt-6.1-sol","azureOpenAIApiInstanceName":"veritus-west-us","azureOpenAIApiKey":"...","azureOpenAIApiVersion":"2025-01-01-preview"}]'
-AZURE_CLOUD_OPENAI_GPT6LUNA_CREDENTIALS='[{"azureOpenAIApiDeploymentName":"gpt-6-luna","azureOpenAIApiInstanceName":"veritus-west-us","azureOpenAIApiKey":"...","azureOpenAIApiVersion":"2025-01-01-preview"}]'
+AZURE_CLOUD_OPENAI_GPT61SOL_CREDENTIALS='[{"azureOpenAIApiDeploymentName":"gpt-6.1-sol","azureOpenAIApiInstanceName":"----","azureOpenAIApiKey":"...","azureOpenAIApiVersion":"2025-01-01-preview"}]'
+AZURE_CLOUD_OPENAI_GPT6LUNA_CREDENTIALS='[{"azureOpenAIApiDeploymentName":"gpt-6-luna","azureOpenAIApiInstanceName":"----","azureOpenAIApiKey":"...","azureOpenAIApiVersion":"2025-01-01-preview"}]'
 ```
 
 ---
@@ -164,11 +163,4 @@ npm run dev
 
 ---
 
-## ✅ Verified AI Model Integrations
 
-All 4 specified models have been connected and verified with real live API calls:
-
-1. **Gemini 3.1 Pro Preview** (`gemini-3.1-pro-preview` via Google Gemini API) - **VERIFIED LIVE**
-2. **Gemini 3.8 Flash** (`gemini-3.8-flash` via Google Gemini API) - **VERIFIED LIVE**
-3. **Sol 6.1** (`gpt-6.1-sol` via Azure OpenAI Deployment) - **VERIFIED LIVE**
-4. **Luna 6** (`gpt-6-luna` via Azure OpenAI Deployment) - **VERIFIED LIVE**
