@@ -18,6 +18,13 @@ A production-ready, full-stack multi-model AI chatbot application. Built on **No
   - **Writing Style**: `conversational`, `simple English`, `technical`, `bullet-point`.
   - **Language**: Custom preferred output language (defaults to English).
   - **Custom System Prompt**: User-specified session instructions treated safely as untrusted context.
+- **File Attachments & Multimodal Chat Input**:
+  - **Supported formats**: Screenshots & images (PNG, JPG, JPEG, WEBP), PDF documents, Word documents (DOCX), and Plain Text (TXT).
+  - **Upload limits**: Configurable max 10 MB per file (`MAX_FILE_SIZE_MB`) and up to 5 files per message (`MAX_ATTACHMENTS_PER_MESSAGE`).
+  - **Multimodal AI Provider Dispatch**: Vision images sent directly to Gemini and Azure OpenAI vision endpoints; PDFs and DOCX extracted with layout and page markers preserved.
+  - **Security & Sandboxing**: Server-side magic-byte header validation, UUID-based safe storage keys, path traversal protection, strict user-ownership verification, and untrusted-content prompt isolation.
+  - **Composer UI**: Paperclip attachment button, drag-and-drop dropzone, staged attachments tray with thumbnail previews, and full-screen image lightbox modal.
+  - **Restored History**: Attachment metadata and cards remain permanently linked to their messages in chat history.
 - **User Authentication & Ownership**:
   - Secure registration and login with bcrypt password hashing and JWT authentication.
   - Full data isolation: users can only read, update, or delete their own chat sessions and messages.

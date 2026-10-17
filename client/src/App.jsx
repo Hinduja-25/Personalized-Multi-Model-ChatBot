@@ -175,17 +175,23 @@ export function AppContent() {
     };
 
     // Send a message
-    const handleSendMessage = async (content) => {
-        if (!activeSessionId || !content.trim()) return;
+    const handleSendMessage = async (content, stagedAttachments = []) => {
+        const hasText = content && content.trim();
+        const hasAttachments = stagedAttachments && stagedAttachments.length > 0;
+        if (!activeSessionId || (!hasText && !hasAttachments)) return;
 
         setErrorMessage(null);
         setLastFailedMessage(null);
+
+        const attachmentIds = stagedAttachments.map((a) => a._id || a.id);
+        const finalContent = hasText ? content.trim() : "Please review and analyze the attached file(s).";
 
         // Optimistically append user message to UI
         const tempUserMessage = {
             _id: `temp-${Date.now()}`,
             role: "user",
-            content,
+            content: finalContent,
+            attachments: stagedAttachments,
             createdAt: new Date().toISOString()
         };
         setMessages((prev) => [...prev, tempUserMessage]);
@@ -193,8 +199,9 @@ export function AppContent() {
 
         try {
             const res = await api.messages.send(activeSessionId, {
-                content,
-                modelKey: activeSession?.selectedModel
+                content: finalContent,
+                modelKey: activeSession?.selectedModel,
+                attachmentIds
             });
 
             if (res.success && res.assistantMessage) {
@@ -207,7 +214,7 @@ export function AppContent() {
 
                 // Update session title in sidebar if auto-generated
                 if (activeSession?.title === "New Chat") {
-                    const newTitle = content.length > 35 ? `${content.substring(0, 32)}...` : content;
+                    const newTitle = finalContent.length > 35 ? `${finalContent.substring(0, 32)}...` : finalContent;
                     setSessions((prev) =>
                         prev.map((s) => (s._id === activeSessionId ? { ...s, title: newTitle } : s))
                     );
@@ -217,7 +224,7 @@ export function AppContent() {
             console.error("Message send failed:", err);
             const msg = err.data?.message || err.message || "Failed to get AI response.";
             setErrorMessage(msg);
-            setLastFailedMessage(content);
+            setLastFailedMessage({ content: finalContent, stagedAttachments });
         } finally {
             setIsSending(false);
         }
@@ -225,7 +232,11 @@ export function AppContent() {
 
     const handleRetry = () => {
         if (lastFailedMessage) {
-            handleSendMessage(lastFailedMessage);
+            if (typeof lastFailedMessage === "object") {
+                handleSendMessage(lastFailedMessage.content, lastFailedMessage.stagedAttachments);
+            } else {
+                handleSendMessage(lastFailedMessage);
+            }
         }
     };
 

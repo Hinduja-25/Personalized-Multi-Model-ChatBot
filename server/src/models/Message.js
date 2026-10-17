@@ -39,7 +39,13 @@ const messageSchema = new mongoose.Schema(
         errorMetadata: {
             type: String,
             default: null
-        }
+        },
+        attachments: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Attachment"
+            }
+        ]
     },
     {
         timestamps: true,

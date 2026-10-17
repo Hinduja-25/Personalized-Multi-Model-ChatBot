@@ -759,6 +759,25 @@ textarea {
   font-size: 0.93rem;
 }
 
+/* Copy button for assistant messages */
+.copy-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.85rem;
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+}
+
+.copy-btn:hover {
+  background: var(--bg-card-hover);
+}
+
+
 /* Tables */
 .message-bubble table {
   width: auto;
@@ -927,6 +946,379 @@ textarea {
   color: var(--text-faint);
   text-align: center;
   margin-top: 0.4rem;
+}
+
+/* ==========================================================================
+   File Attachments & Multimodal UI
+   ========================================================================== */
+
+/* Paperclip attach button */
+.btn-attach {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.btn-attach:hover:not(:disabled) {
+  background: var(--bg-card-hover);
+  color: var(--primary);
+  transform: translateY(-1px);
+}
+
+.btn-attach:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Drag and Drop Overlay */
+.chat-area.dragging-active {
+  position: relative;
+}
+
+.drag-drop-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed var(--primary);
+  margin: 0.75rem;
+  border-radius: var(--radius-lg);
+  pointer-events: none;
+  animation: fadeIn 0.2s ease;
+}
+
+.drag-drop-modal {
+  text-align: center;
+  color: var(--text-main);
+  padding: 2rem;
+}
+
+.drag-drop-modal .drag-icon {
+  font-size: 3rem;
+  margin-bottom: 0.75rem;
+  animation: bounce 1s infinite alternate ease-in-out;
+}
+
+@keyframes bounce {
+  from { transform: translateY(0); }
+  to { transform: translateY(-8px); }
+}
+
+.drag-drop-modal h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: #fff;
+}
+
+.drag-drop-modal p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* Upload Error Alert */
+.upload-error-alert {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  color: #fca5a5;
+  border-radius: var(--radius-md);
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.close-alert-btn {
+  background: none;
+  border: none;
+  color: #fca5a5;
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0 0.25rem;
+}
+
+/* Staged Attachments Tray above composer */
+.staged-attachments-tray {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.25rem 0.75rem;
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.staged-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  padding: 0.35rem 0.5rem 0.35rem 0.35rem;
+  max-width: 220px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: border-color var(--transition-fast);
+}
+
+.staged-chip:hover {
+  border-color: var(--border-primary);
+}
+
+.staged-thumb {
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+}
+
+.staged-icon {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.staged-meta {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-size: 0.75rem;
+}
+
+.staged-name {
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+}
+
+.staged-size {
+  color: var(--text-faint);
+  font-size: 0.7rem;
+}
+
+.staged-remove-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 1.1rem;
+  line-height: 1;
+  padding: 0 0.2rem;
+  border-radius: 50%;
+  transition: color var(--transition-fast);
+}
+
+.staged-remove-btn:hover {
+  color: var(--danger);
+}
+
+/* Uploading Chip with spinner */
+.uploading-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  border-radius: var(--radius-md);
+  padding: 0.4rem 0.75rem;
+  font-size: 0.8rem;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.mini-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(99, 102, 241, 0.2);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Message Attachments Container in History */
+.message-attachments-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.message-image-card {
+  position: relative;
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+  max-width: 280px;
+  max-height: 200px;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.message-image-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  border-color: var(--primary);
+}
+
+.message-attachment-thumb {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  display: block;
+}
+
+.image-card-caption {
+  padding: 0.35rem 0.6rem;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.image-card-caption .file-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180px;
+  color: var(--text-main);
+  font-weight: 500;
+}
+
+/* Message Document Card */
+.message-doc-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: inherit;
+  transition: all var(--transition-fast);
+  max-width: 320px;
+}
+
+.message-doc-card:hover {
+  border-color: var(--primary);
+  background: var(--bg-card-hover);
+  transform: translateY(-1px);
+}
+
+.message-doc-card .doc-icon {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.message-doc-card .doc-info {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.message-doc-card .doc-name {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.message-doc-card .doc-meta {
+  font-size: 0.72rem;
+  color: var(--text-faint);
+}
+
+.message-doc-card .doc-arrow {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-left: auto;
+}
+
+/* Image Full-view Lightbox Modal */
+.image-preview-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.image-preview-modal .modal-inner {
+  background: var(--bg-card);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-lg);
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+}
+
+.image-preview-modal .modal-header {
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.image-preview-modal .modal-title {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.image-preview-modal .modal-close {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.image-preview-modal .modal-close:hover {
+  color: var(--text-main);
+}
+
+.image-preview-modal .modal-full-img {
+  max-width: 85vw;
+  max-height: 80vh;
+  object-fit: contain;
+  background: #000;
 }
 
 /* ==========================================================================

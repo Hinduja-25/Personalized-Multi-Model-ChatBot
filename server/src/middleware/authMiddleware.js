@@ -8,12 +8,14 @@ import User from "../models/User.js";
 export const protect = async (req, res, next) => {
     let token;
 
-    // 1. Extract JWT from Authorization header (Bearer <token>)
+    // 1. Extract JWT from Authorization header (Bearer <token>) or query parameter
     if (
         req.headers.authorization &&
         req.headers.authorization.startsWith("Bearer ")
     ) {
         token = req.headers.authorization.split(" ")[1];
+    } else if (req.query && req.query.token) {
+        token = req.query.token;
     }
 
     // 2. Reject if no token is provided

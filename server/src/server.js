@@ -5,6 +5,7 @@ import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import sessionRoutes from "./routes/sessionRoutes.js";
 import modelRoutes from "./routes/modelRoutes.js";
+import attachmentRoutes from "./routes/attachmentRoutes.js";
 
 dotenv.config();
 
@@ -36,6 +37,10 @@ app.use("/api/sessions", sessionRoutes);
 // AI Models registry routes
 app.use("/models", modelRoutes);
 app.use("/api/models", modelRoutes);
+
+// Attachment routes
+app.use("/attachments", attachmentRoutes);
+app.use("/api/attachments", attachmentRoutes);
 
 // 404 handler for undefined routes
 app.use((req, res, next) => {

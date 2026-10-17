@@ -11,7 +11,10 @@ coverage/
 .DS_Store
 # IDE files
 .vscode/
-# Build output
+# Build output 
 dist/
+# Uploaded attachments
+uploads/
+server/uploads/
 # Optional: npm debug logs
 npm-debug.log*

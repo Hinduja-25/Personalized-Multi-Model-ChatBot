@@ -10,7 +10,8 @@ export const generateAIResponse = async ({
     modelKey,
     systemPrompt,
     conversationHistory = [],
-    userMessage
+    userMessage,
+    attachments = []
 }) => {
     // 1. Resolve model key or fallback to default
     const effectiveModelKey = modelKey || getDefaultModelKey();
@@ -38,7 +39,8 @@ export const generateAIResponse = async ({
                 modelDef,
                 systemPrompt,
                 conversationHistory,
-                userMessage
+                userMessage,
+                attachments
             });
             break;
 
@@ -47,7 +49,8 @@ export const generateAIResponse = async ({
                 modelDef,
                 systemPrompt,
                 conversationHistory,
-                userMessage
+                userMessage,
+                attachments
             });
             break;
 
