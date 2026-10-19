@@ -271,9 +271,14 @@ export const ChatArea = ({
                     <div className="header-session-info">
                         <h2 className="header-session-title">{session.title || "Untitled Chat"}</h2>
                         <div className="session-meta-chips">
-                            <span className="meta-chip">Tone: {session.tone || "natural"}</span>
-                            <span className="meta-chip">Length: {session.responseLength || "medium"}</span>
-                            <span className="meta-chip">Style: {session.writingStyle || "conversational"}</span>
+                            <span className="meta-chip adaptive-chip" title="Tone, length, and style adapt dynamically to conversation context">
+                                ✦ Dynamic Style
+                            </span>
+                            {session.systemPrompt && session.systemPrompt.trim() && (
+                                <span className="meta-chip custom-instructions-chip" title="Custom system instructions active for this chat">
+                                    Custom Instructions Active
+                                </span>
+                            )}
                         </div>
                     </div>
                 </div>

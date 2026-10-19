@@ -35,10 +35,7 @@ const chatSessionSchema = new mongoose.Schema(
             type: String,
             default: "medium",
             trim: true,
-            enum: {
-                values: ["short", "medium", "detailed"],
-                message: "{VALUE} is not a supported response length (must be short, medium, or detailed)"
-            }
+            maxlength: [50, "Response length cannot exceed 50 characters"]
         },
         writingStyle: {
             type: String,

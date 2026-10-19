@@ -1,13 +1,5 @@
 import React, { useState, useEffect } from "react";
 
-const TONE_OPTIONS = ["natural", "casual", "formal", "friendly", "professional"];
-const LENGTH_OPTIONS = [
-    { value: "short", label: "Short (1-2 paragraphs / concise)" },
-    { value: "medium", label: "Medium (Standard balanced depth)" },
-    { value: "detailed", label: "Detailed (Thorough breakdown & code)" }
-];
-const STYLE_OPTIONS = ["conversational", "simple English", "technical", "bullet-point"];
-
 export const PersonalizationModal = ({
     isOpen,
     onClose,
@@ -15,20 +7,12 @@ export const PersonalizationModal = ({
     onSave
 }) => {
     const [systemPrompt, setSystemPrompt] = useState("");
-    const [tone, setTone] = useState("natural");
-    const [responseLength, setResponseLength] = useState("medium");
-    const [writingStyle, setWritingStyle] = useState("conversational");
-
     const [isSaving, setIsSaving] = useState(false);
 
     // Sync state when session changes
     useEffect(() => {
         if (session) {
             setSystemPrompt(session.systemPrompt || "");
-            setTone(session.tone || "natural");
-            setResponseLength(session.responseLength || "medium");
-            setWritingStyle(session.writingStyle || "conversational");
-
         }
     }, [session, isOpen]);
 
@@ -39,10 +23,7 @@ export const PersonalizationModal = ({
         setIsSaving(true);
         try {
             await onSave({
-                systemPrompt: systemPrompt.trim(),
-                tone,
-                responseLength,
-                writingStyle,
+                systemPrompt: systemPrompt.trim()
             });
             onClose();
         } finally {
@@ -52,14 +33,17 @@ export const PersonalizationModal = ({
 
     const handleReset = () => {
         setSystemPrompt("");
-        setTone("natural");
-        setResponseLength("medium");
-        setWritingStyle("conversational");
     };
 
     return (
-        <div className="modal-backdrop" onClick={onClose} role="dialog" aria-modal="true" aria-labelledby="personalization-modal-title">
-            <div className="modal-card" onClick={(e) => e.stopPropagation()}>
+        <div
+            className="modal-backdrop"
+            onClick={onClose}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="personalization-modal-title"
+        >
+            <div className="modal-card personalization-modal-card" onClick={(e) => e.stopPropagation()}>
                 <div className="modal-header">
                     <div className="modal-title-group">
                         <span className="modal-icon">⚙️</span>
@@ -71,78 +55,40 @@ export const PersonalizationModal = ({
                 </div>
 
                 <p className="modal-subtitle">
-                    Customize how the AI responds in <strong>"{session?.title || "this chat"}"</strong>.
-                    Settings are saved specifically to this conversation.
+                    Customize instructions and style guidance for <strong>"{session?.title || "this chat"}"</strong>.
                 </p>
 
+                {/* Adaptive Style Info Banner */}
+                <div className="adaptive-info-banner">
+                    <span className="adaptive-info-icon">✨</span>
+                    <div className="adaptive-info-text">
+                        <strong>Dynamic Style Adaptation:</strong> OmniChat dynamically infers tone, formality, sentence structure, and response length from your conversation context, recipient, and task.
+                    </div>
+                </div>
+
                 <form onSubmit={handleSave} className="modal-form">
-                    {/* System Prompt */}
-                    <div className="form-group">
-                        <label htmlFor="custom-instructions">
-                            Custom System Instructions <span className="label-optional">(Optional)</span>
-                        </label>
+                    {/* Custom System Instructions & Writing Examples */}
+                    <div className="form-group flex-1">
+                        <div className="label-with-counter">
+                            <label htmlFor="custom-instructions">
+                                Custom System Instructions <span className="label-optional">(Optional)</span>
+                            </label>
+                            <span className="char-counter">
+                                {systemPrompt.length} / 3000
+                            </span>
+                        </div>
                         <textarea
                             id="custom-instructions"
-                            rows={3}
-                            placeholder="e.g. Act as a senior full-stack engineer. Review code for performance and security vulnerabilities."
+                            className="custom-instructions-textarea"
+                            rows={8}
+                            maxLength={3000}
+                            placeholder="Add role or task instructions, or paste examples of your own writing for the assistant to naturally match your style..."
                             value={systemPrompt}
                             onChange={(e) => setSystemPrompt(e.target.value)}
                         />
-                        <span className="form-hint">Session-specific instructions combined with system guidelines.</span>
-                    </div>
-
-                    <div className="form-row">
-                        {/* Tone */}
-                        <div className="form-group flex-1">
-                            <label htmlFor="tone-select">Tone</label>
-                            <select
-                                id="tone-select"
-                                value={tone}
-                                onChange={(e) => setTone(e.target.value)}
-                            >
-                                {TONE_OPTIONS.map((t) => (
-                                    <option key={t} value={t}>
-                                        {t.charAt(0).toUpperCase() + t.slice(1)}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-
-                        {/* Writing Style */}
-                        <div className="form-group flex-1">
-                            <label htmlFor="style-select">Writing Style</label>
-                            <select
-                                id="style-select"
-                                value={writingStyle}
-                                onChange={(e) => setWritingStyle(e.target.value)}
-                            >
-                                {STYLE_OPTIONS.map((s) => (
-                                    <option key={s} value={s}>
-                                        {s.charAt(0).toUpperCase() + s.slice(1)}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-                    </div>
-
-                    <div className="form-row">
-                        {/* Response Length */}
-                        <div className="form-group flex-1">
-                            <label htmlFor="length-select">Response Length</label>
-                            <select
-                                id="length-select"
-                                value={responseLength}
-                                onChange={(e) => setResponseLength(e.target.value)}
-                            >
-                                {LENGTH_OPTIONS.map((opt) => (
-                                    <option key={opt.value} value={opt.value}>
-                                        {opt.label}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-
-
+                        <span className="form-hint">
+                            Provide session-specific instructions, persona guidance, or paste your own writing samples. Writing examples serve as the strongest reference for matching your voice.
+                        </span>
                     </div>
 
                     <div className="modal-actions">

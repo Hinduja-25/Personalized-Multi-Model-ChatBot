@@ -12,12 +12,13 @@ A production-ready, full-stack multi-model AI chatbot application. Built on **No
   - **Sol 6.1 (Azure OpenAI)** (`sol-6-1` / `gpt-6.1-sol`): OpenAI's frontier reasoning and coding model hosted on Azure Cloud.
   - **Luna 6 (Azure OpenAI)** (`luna-6` / `gpt-6-luna`): OpenAI's high-throughput, low-latency conversational model hosted on Azure Cloud.
 - **Centralized Model Registry**: Configurable default model (`DEFAULT_MODEL=gemini-3-1-pro`), stable internal keys, dynamic model status checking (`GET /api/models`), and runtime validation.
-- **Per-Chat Personalization**:
-  - **Tone**: `natural`, `casual`, `formal`, `friendly`, `professional`.
-  - **Response Length**: `short`, `medium`, `detailed`.
-  - **Writing Style**: `conversational`, `simple English`, `technical`, `bullet-point`.
-  - **Language**: Custom preferred output language (defaults to English).
-  - **Custom System Prompt**: User-specified session instructions treated safely as untrusted context.
+- **Dynamic Personalization & Communication Style Adaptation**:
+  - **Context-Driven Inference**: Automatically infers tone, level of formality, sentence structure, and response length from conversation history, recipient/relationship, and task objectives.
+  - **Natural Style Mirroring**: Matches vocabulary, phrasing, cadence, punctuation, abbreviations, and emoji habits when supported by examples.
+  - **Strict 5-Tier Instruction Priority**: Core safety > explicit turn requests > custom instructions/examples > conversation patterns > balanced defaults.
+  - **Drafting & Ghostwriting Direct Mode**: Returns only the drafted message without conversational filler or disclaimers when asked to draft replies.
+  - **Custom System Instructions & Writing Examples**: Text area for user-provided instructions or writing samples, treated as untrusted context within safety boundaries.
+  - **Backward Compatible**: Transparent support for legacy sessions with tone, writingStyle, and responseLength fields.
 - **File Attachments & Multimodal Chat Input**:
   - **Supported formats**: Screenshots & images (PNG, JPG, JPEG, WEBP), PDF documents, Word documents (DOCX), and Plain Text (TXT).
   - **Upload limits**: Configurable max 10 MB per file (`MAX_FILE_SIZE_MB`) and up to 5 files per message (`MAX_ATTACHMENTS_PER_MESSAGE`).

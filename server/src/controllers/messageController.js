@@ -164,12 +164,9 @@ export const sendMessage = async (req, res, next) => {
             );
         }
 
-        // 7. Build personalized system prompt
+        // 7. Build personalized system prompt with dynamic style adaptation
         const systemPrompt = buildSystemPrompt({
             systemPrompt: session.systemPrompt,
-            tone: session.tone,
-            responseLength: session.responseLength,
-            writingStyle: session.writingStyle,
             language: session.language
         });
 

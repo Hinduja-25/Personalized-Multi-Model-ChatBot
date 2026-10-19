@@ -426,6 +426,20 @@ textarea {
   border: 1px solid var(--border-subtle);
 }
 
+.meta-chip.adaptive-chip {
+  color: #818cf8;
+  background: rgba(99, 102, 241, 0.1);
+  border-color: rgba(99, 102, 241, 0.3);
+  font-weight: 500;
+}
+
+.meta-chip.custom-instructions-chip {
+  color: #34d399;
+  background: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.3);
+  font-weight: 500;
+}
+
 .chat-header-right {
   display: flex;
   align-items: center;
@@ -1380,7 +1394,59 @@ textarea {
 .modal-subtitle {
   font-size: 0.85rem;
   color: var(--text-muted);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.personalization-modal-card {
+  max-width: 620px;
+}
+
+.adaptive-info-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  background: rgba(99, 102, 241, 0.08);
+  border: 1px solid rgba(99, 102, 241, 0.22);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.adaptive-info-icon {
+  font-size: 1.1rem;
+  line-height: 1.3;
+  flex-shrink: 0;
+}
+
+.adaptive-info-text {
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+
+.adaptive-info-text strong {
+  color: var(--text-main);
+}
+
+.label-with-counter {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.25rem;
+}
+
+.char-counter {
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.custom-instructions-textarea {
+  min-height: 190px;
+  line-height: 1.55;
+  font-family: inherit;
+  font-size: 0.875rem;
+  resize: vertical;
 }
 
 .modal-form {
