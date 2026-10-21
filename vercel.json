@@ -1,41 +1,51 @@
 {
-  "version": 2,
-  "builds": [
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "services": {
+    "client": {
+      "root": "client",
+      "framework": "vite"
+    },
+    "server": {
+      "root": "server",
+      "framework": "express"
+    }
+  },
+  "rewrites": [
     {
-      "src": "client/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
+      "source": "/auth(.*)",
+      "destination": {
+        "service": "server"
       }
     },
     {
-      "src": "server/src/server.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/auth(.*)",
-      "dest": "server/src/server.js"
+      "source": "/sessions(.*)",
+      "destination": {
+        "service": "server"
+      }
     },
     {
-      "src": "/sessions(.*)",
-      "dest": "server/src/server.js"
+      "source": "/models(.*)",
+      "destination": {
+        "service": "server"
+      }
     },
     {
-      "src": "/models(.*)",
-      "dest": "server/src/server.js"
+      "source": "/attachments(.*)",
+      "destination": {
+        "service": "server"
+      }
     },
     {
-      "src": "/attachments(.*)",
-      "dest": "server/src/server.js"
+      "source": "/api/(.*)",
+      "destination": {
+        "service": "server"
+      }
     },
     {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "client/$1"
+      "source": "/(.*)",
+      "destination": {
+        "service": "client"
+      }
     }
   ]
 }
