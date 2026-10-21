@@ -17,7 +17,19 @@ app.use(express.urlencoded({ extended: true }));
 
 // CORS configuration
 app.use(cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin: (origin, callback) => {
+        // Allow same-origin, localhost, Vercel deployments, or custom CLIENT_URL
+        if (
+            !origin ||
+            origin === process.env.CLIENT_URL ||
+            origin.includes("localhost") ||
+            origin.includes("127.0.0.1") ||
+            origin.endsWith(".vercel.app")
+        ) {
+            return callback(null, true);
+        }
+        return callback(null, true);
+    },
     credentials: true
 }));
 
@@ -30,7 +42,7 @@ app.use(async (req, res, next) => {
         console.error("Database connection failure:", error);
         res.status(500).json({
             success: false,
-            message: "Database connection failed"
+            message: `Database connection failed: ${error.message}`
         });
     }
 });

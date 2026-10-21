@@ -22,10 +22,15 @@ const request = async (endpoint, options = {}) => {
     const res = await fetch(`${BASE_URL}${endpoint}`, config);
 
     let data;
+    const rawText = await res.text();
     try {
-        data = await res.json();
+        data = JSON.parse(rawText);
     } catch {
-        data = { message: res.statusText || "Network error" };
+        data = {
+            message: res.status
+                ? `Server error (${res.status}${res.statusText ? `: ${res.statusText}` : ""})`
+                : "Network error"
+        };
     }
 
     if (!res.ok) {
