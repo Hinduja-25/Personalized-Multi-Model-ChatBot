@@ -2,7 +2,7 @@ import { getModelList, getDefaultModelKey } from "../config/modelRegistry.js";
 
 /**
  * @desc    Get all enabled models and default model
- * @route   GET /api/models
+ * @route   GET /models
  * @access  Public
  */
 export const getModels = async (req, res, next) => {

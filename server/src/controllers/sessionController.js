@@ -4,7 +4,7 @@ import { isValidModelKey, getDefaultModelKey } from "../config/modelRegistry.js"
 
 /**
  * @desc    Create a new chat session
- * @route   POST /api/sessions
+ * @route   POST /sessions
  * @access  Private (protected)
  */
 export const createSession = async (req, res, next) => {
@@ -51,7 +51,7 @@ export const createSession = async (req, res, next) => {
 
 /**
  * @desc    Get all chat sessions for the authenticated user
- * @route   GET /api/sessions
+ * @route   GET /sessions
  * @access  Private (protected)
  */
 export const getSessions = async (req, res, next) => {
@@ -72,7 +72,7 @@ export const getSessions = async (req, res, next) => {
 
 /**
  * @desc    Get details of a specific chat session
- * @route   GET /api/sessions/:sessionId
+ * @route   GET /sessions/:sessionId
  * @access  Private (protected)
  */
 export const getSessionById = async (req, res, next) => {
@@ -107,7 +107,7 @@ export const getSessionById = async (req, res, next) => {
 
 /**
  * @desc    Update session title, selected model, or personalization settings
- * @route   PATCH /api/sessions/:sessionId
+ * @route   PATCH /sessions/:sessionId
  * @access  Private (protected)
  */
 export const updateSession = async (req, res, next) => {
@@ -172,7 +172,7 @@ export const updateSession = async (req, res, next) => {
 
 /**
  * @desc    Delete a session and all its messages
- * @route   DELETE /api/sessions/:sessionId
+ * @route   DELETE /sessions/:sessionId
  * @access  Private (protected)
  */
 export const deleteSession = async (req, res, next) => {

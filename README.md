@@ -11,7 +11,7 @@ A production-ready, full-stack multi-model AI chatbot application. Built on **No
   - **Gemini 3.8 Flash** (`gemini-3-8`): Google's high-speed, high-intelligence multimodal workhorse.
   - **Sol 6.1 (Azure OpenAI)** (`sol-6-1` / `gpt-6.1-sol`): OpenAI's frontier reasoning and coding model hosted on Azure Cloud.
   - **Luna 6 (Azure OpenAI)** (`luna-6` / `gpt-6-luna`): OpenAI's high-throughput, low-latency conversational model hosted on Azure Cloud.
-- **Centralized Model Registry**: Configurable default model (`DEFAULT_MODEL=gemini-3-1-pro`), stable internal keys, dynamic model status checking (`GET /api/models`), and runtime validation.
+- **Centralized Model Registry**: Configurable default model (`DEFAULT_MODEL=gemini-3-1-pro`), stable internal keys, dynamic model status checking (`GET /models`), and runtime validation.
 - **Dynamic Personalization & Communication Style Adaptation**:
   - **Context-Driven Inference**: Automatically infers tone, level of formality, sentence structure, and response length from conversation history, recipient/relationship, and task objectives.
   - **Natural Style Mirroring**: Matches vocabulary, phrasing, cadence, punctuation, abbreviations, and emoji habits when supported by examples.
@@ -145,29 +145,36 @@ npm run dev
 ### Authentication
 | Method | Endpoint | Description | Access |
 |---|---|---|---|
-| `POST` | `/api/auth/register` | Register new user account | Public |
-| `POST` | `/api/auth/login` | Authenticate user & get JWT token | Public |
-| `GET` | `/api/auth/me` | Fetch authenticated user profile | Private |
+| `POST` | `/auth/register` | Register new user account | Public |
+| `POST` | `/auth/login` | Authenticate user & get JWT token | Public |
+| `GET` | `/auth/me` | Fetch authenticated user profile | Private |
 
 ### AI Models Registry
 | Method | Endpoint | Description | Access |
 |---|---|---|---|
-| `GET` | `/api/models` | List enabled models, default model & provider info | Public |
+| `GET` | `/models` | List enabled models, default model & provider info | Public |
 
 ### Chat Sessions
 | Method | Endpoint | Description | Access |
 |---|---|---|---|
-| `POST` | `/api/sessions` | Create a new chat session with personalization | Private |
-| `GET` | `/api/sessions` | List all sessions owned by the authenticated user | Private |
-| `GET` | `/api/sessions/:sessionId` | Retrieve session details | Private |
-| `PATCH` | `/api/sessions/:sessionId` | Update title, selected model, or personalization | Private |
-| `DELETE` | `/api/sessions/:sessionId` | Delete session and associated messages | Private |
+| `POST` | `/sessions` | Create a new chat session with personalization | Private |
+| `GET` | `/sessions` | List all sessions owned by the authenticated user | Private |
+| `GET` | `/sessions/:sessionId` | Retrieve session details | Private |
+| `PATCH` | `/sessions/:sessionId` | Update title, selected model, or personalization | Private |
+| `DELETE` | `/sessions/:sessionId` | Delete session and associated messages | Private |
 
 ### Messages
 | Method | Endpoint | Description | Access |
 |---|---|---|---|
-| `GET` | `/api/sessions/:sessionId/messages` | Retrieve saved messages in chronological order | Private |
-| `POST` | `/api/sessions/:sessionId/messages` | Send user message, dispatch to AI model, save response | Private |
+| `GET` | `/sessions/:sessionId/messages` | Retrieve saved messages in chronological order | Private |
+| `POST` | `/sessions/:sessionId/messages` | Send user message, dispatch to AI model, save response | Private |
+
+### Attachments
+| Method | Endpoint | Description | Access |
+|---|---|---|---|
+| `POST` | `/attachments/upload` | Upload files for a chat session | Private |
+| `GET` | `/attachments/:id` | Stream/preview attachment file | Private |
+| `DELETE` | `/attachments/:id` | Delete an attachment | Private |
 
 ---
 

@@ -34,7 +34,7 @@ const validateEmail = (email) => {
 
 /**
  * @desc    Register a new user
- * @route   POST /api/auth/register
+ * @route   POST /auth/register
  * @access  Public
  */
 export const register = async (req, res, next) => {
@@ -114,7 +114,7 @@ export const register = async (req, res, next) => {
 
 /**
  * @desc    Authenticate user & get token (login)
- * @route   POST /api/auth/login
+ * @route   POST /auth/login
  * @access  Public
  */
 export const login = async (req, res, next) => {
@@ -173,7 +173,7 @@ export const login = async (req, res, next) => {
 
 /**
  * @desc    Get currently authenticated user profile
- * @route   GET /api/auth/me
+ * @route   GET /auth/me
  * @access  Private (protected by authMiddleware)
  */
 export const getMe = async (req, res, next) => {

@@ -42,48 +42,48 @@ export const api = {
     // Auth endpoints
     auth: {
         register: (userData) =>
-            request("/api/auth/register", {
+            request("/auth/register", {
                 method: "POST",
                 body: JSON.stringify(userData)
             }),
         login: (credentials) =>
-            request("/api/auth/login", {
+            request("/auth/login", {
                 method: "POST",
                 body: JSON.stringify(credentials)
             }),
-        getMe: () => request("/api/auth/me")
+        getMe: () => request("/auth/me")
     },
 
     // Models endpoint
     models: {
-        getAll: () => request("/api/models")
+        getAll: () => request("/models")
     },
 
     // Sessions endpoints
     sessions: {
-        list: () => request("/api/sessions"),
+        list: () => request("/sessions"),
         create: (sessionData = {}) =>
-            request("/api/sessions", {
+            request("/sessions", {
                 method: "POST",
                 body: JSON.stringify(sessionData)
             }),
-        getById: (sessionId) => request(`/api/sessions/${sessionId}`),
+        getById: (sessionId) => request(`/sessions/${sessionId}`),
         update: (sessionId, updateData) =>
-            request(`/api/sessions/${sessionId}`, {
+            request(`/sessions/${sessionId}`, {
                 method: "PATCH",
                 body: JSON.stringify(updateData)
             }),
         delete: (sessionId) =>
-            request(`/api/sessions/${sessionId}`, {
+            request(`/sessions/${sessionId}`, {
                 method: "DELETE"
             })
     },
 
     // Messages endpoints
     messages: {
-        list: (sessionId) => request(`/api/sessions/${sessionId}/messages`),
+        list: (sessionId) => request(`/sessions/${sessionId}/messages`),
         send: (sessionId, { content, modelKey, attachmentIds = [] }) =>
-            request(`/api/sessions/${sessionId}/messages`, {
+            request(`/sessions/${sessionId}/messages`, {
                 method: "POST",
                 body: JSON.stringify({ content, modelKey, attachmentIds })
             })
@@ -101,7 +101,7 @@ export const api = {
                 }
 
                 const xhr = new XMLHttpRequest();
-                xhr.open("POST", `${BASE_URL}/api/attachments/upload`);
+                xhr.open("POST", `${BASE_URL}/attachments/upload`);
                 if (token) {
                     xhr.setRequestHeader("Authorization", `Bearer ${token}`);
                 }
@@ -138,10 +138,10 @@ export const api = {
             });
         },
         delete: (attachmentId) =>
-            request(`/api/attachments/${attachmentId}`, {
+            request(`/attachments/${attachmentId}`, {
                 method: "DELETE"
             }),
-        getUrl: (attachmentId) => `${BASE_URL}/api/attachments/${attachmentId}`
+        getUrl: (attachmentId) => `${BASE_URL}/attachments/${attachmentId}`
     }
 };
 

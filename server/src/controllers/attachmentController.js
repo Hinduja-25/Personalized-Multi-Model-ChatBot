@@ -6,7 +6,7 @@ import { validateFileBuffer } from "../middleware/uploadMiddleware.js";
 
 /**
  * @desc    Upload one or multiple attachments for a chat session
- * @route   POST /api/attachments/upload
+ * @route   POST /attachments/upload
  * @access  Private (protected)
  */
 export const uploadAttachments = async (req, res, next) => {
@@ -98,7 +98,7 @@ export const uploadAttachments = async (req, res, next) => {
 
 /**
  * @desc    Get or stream an attachment file
- * @route   GET /api/attachments/:id
+ * @route   GET /attachments/:id
  * @access  Private (protected)
  */
 export const getAttachment = async (req, res, next) => {
@@ -146,7 +146,7 @@ export const getAttachment = async (req, res, next) => {
 
 /**
  * @desc    Delete an attachment before sending or cleanup
- * @route   DELETE /api/attachments/:id
+ * @route   DELETE /attachments/:id
  * @access  Private (protected)
  */
 export const deleteAttachment = async (req, res, next) => {

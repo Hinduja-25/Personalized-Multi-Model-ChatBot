@@ -8,7 +8,7 @@ import { getDefaultModelKey, isValidModelKey } from "../config/modelRegistry.js"
 
 /**
  * @desc    Get all messages for a session in chronological order
- * @route   GET /api/sessions/:sessionId/messages
+ * @route   GET /sessions/:sessionId/messages
  * @access  Private (protected)
  */
 export const getMessages = async (req, res, next) => {
@@ -49,7 +49,7 @@ export const getMessages = async (req, res, next) => {
 
 /**
  * @desc    Submit user message, generate AI reply, and persist both
- * @route   POST /api/sessions/:sessionId/messages
+ * @route   POST /sessions/:sessionId/messages
  * @access  Private (protected)
  */
 export const sendMessage = async (req, res, next) => {

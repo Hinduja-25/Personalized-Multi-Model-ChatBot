@@ -7,7 +7,19 @@ export default defineConfig({
   server: {
     port: 5173,
     proxy: {
-      '/api': {
+      '/auth': {
+        target: 'http://localhost:5000',
+        changeOrigin: true
+      },
+      '/sessions': {
+        target: 'http://localhost:5000',
+        changeOrigin: true
+      },
+      '/models': {
+        target: 'http://localhost:5000',
+        changeOrigin: true
+      },
+      '/attachments': {
         target: 'http://localhost:5000',
         changeOrigin: true
       }

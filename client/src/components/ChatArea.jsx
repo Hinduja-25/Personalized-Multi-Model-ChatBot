@@ -79,7 +79,7 @@ export const ChatArea = ({
         if (attachment.previewUrl) return attachment.previewUrl;
         const id = attachment._id || attachment.id;
         const token = localStorage.getItem("omnichat_token");
-        return `/api/attachments/${id}${token ? `?token=${encodeURIComponent(token)}` : ""}`;
+        return `/attachments/${id}${token ? `?token=${encodeURIComponent(token)}` : ""}`;
     };
 
     const validateAndUploadFiles = async (files) => {

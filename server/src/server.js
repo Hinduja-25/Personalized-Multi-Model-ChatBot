@@ -28,19 +28,15 @@ app.get("/", (req, res) => {
 
 // Authentication routes
 app.use("/auth", authRoutes);
-app.use("/api/auth", authRoutes);
 
 // Chat session & message routes
 app.use("/sessions", sessionRoutes);
-app.use("/api/sessions", sessionRoutes);
 
 // AI Models registry routes
 app.use("/models", modelRoutes);
-app.use("/api/models", modelRoutes);
 
 // Attachment routes
 app.use("/attachments", attachmentRoutes);
-app.use("/api/attachments", attachmentRoutes);
 
 // 404 handler for undefined routes
 app.use((req, res, next) => {
