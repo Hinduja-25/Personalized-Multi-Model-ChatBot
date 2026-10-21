@@ -21,6 +21,20 @@ app.use(cors({
     credentials: true
 }));
 
+// Database connection middleware (connects or reuses cached connection)
+app.use(async (req, res, next) => {
+    try {
+        await connectDB();
+        next();
+    } catch (error) {
+        console.error("Database connection failure:", error);
+        res.status(500).json({
+            success: false,
+            message: "Database connection failed"
+        });
+    }
+});
+
 // Base health check route
 app.get("/", (req, res) => {
     res.json({ status: "ok", message: "Personalized AI Chatbot API is running" });
@@ -76,8 +90,11 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 5000;
 
-await connectDB();
+if (process.env.NODE_ENV !== "production" || !process.env.VERCEL) {
+    connectDB().catch(console.error);
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+}
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+export default app;
