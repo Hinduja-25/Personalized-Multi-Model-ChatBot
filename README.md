@@ -145,36 +145,29 @@ npm run dev
 ### Authentication
 | Method | Endpoint | Description | Access |
 |---|---|---|---|
-| `POST` | `/auth/register` | Register new user account | Public |
-| `POST` | `/auth/login` | Authenticate user & get JWT token | Public |
-| `GET` | `/auth/me` | Fetch authenticated user profile | Private |
+| `POST` | `/api/auth/register` | Register new user account | Public |
+| `POST` | `/api/auth/login` | Authenticate user & get JWT token | Public |
+| `GET` | `/api/auth/me` | Fetch authenticated user profile | Private |
 
 ### AI Models Registry
 | Method | Endpoint | Description | Access |
 |---|---|---|---|
-| `GET` | `/models` | List enabled models, default model & provider info | Public |
+| `GET` | `/api/models` | List enabled models, default model & provider info | Public |
 
 ### Chat Sessions
 | Method | Endpoint | Description | Access |
 |---|---|---|---|
-| `POST` | `/sessions` | Create a new chat session with personalization | Private |
-| `GET` | `/sessions` | List all sessions owned by the authenticated user | Private |
-| `GET` | `/sessions/:sessionId` | Retrieve session details | Private |
-| `PATCH` | `/sessions/:sessionId` | Update title, selected model, or personalization | Private |
-| `DELETE` | `/sessions/:sessionId` | Delete session and associated messages | Private |
+| `POST` | `/api/sessions` | Create a new chat session with personalization | Private |
+| `GET` | `/api/sessions` | List all sessions owned by the authenticated user | Private |
+| `GET` | `/api/sessions/:sessionId` | Retrieve session details | Private |
+| `PATCH` | `/api/sessions/:sessionId` | Update title, selected model, or personalization | Private |
+| `DELETE` | `/api/sessions/:sessionId` | Delete session and associated messages | Private |
 
 ### Messages
 | Method | Endpoint | Description | Access |
 |---|---|---|---|
-| `GET` | `/sessions/:sessionId/messages` | Retrieve saved messages in chronological order | Private |
-| `POST` | `/sessions/:sessionId/messages` | Send user message, dispatch to AI model, save response | Private |
-
-### Attachments
-| Method | Endpoint | Description | Access |
-|---|---|---|---|
-| `POST` | `/attachments/upload` | Upload files for a chat session | Private |
-| `GET` | `/attachments/:id` | Stream/preview attachment file | Private |
-| `DELETE` | `/attachments/:id` | Delete an attachment | Private |
+| `GET` | `/api/sessions/:sessionId/messages` | Retrieve saved messages in chronological order | Private |
+| `POST` | `/api/sessions/:sessionId/messages` | Send user message, dispatch to AI model, save response | Private |
 
 ---
 
