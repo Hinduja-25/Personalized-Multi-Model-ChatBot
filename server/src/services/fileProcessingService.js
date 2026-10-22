@@ -1,4 +1,4 @@
-import { PDFParse } from "pdf-parse";
+import { extractText, getDocumentProxy } from "unpdf";
 import mammoth from "mammoth";
 import storageService from "./storageService.js";
 import Attachment from "../models/Attachment.js";
@@ -74,24 +74,23 @@ class FileProcessingService {
     }
 
     /**
-     * Process PDF documents
+     * Process PDF documents using serverless-friendly unpdf
      */
     async processPdf(attachment, buffer) {
         try {
-            const parser = new PDFParse({ data: buffer });
-            const result = await parser.getText();
+            const pdf = await getDocumentProxy(new Uint8Array(buffer));
+            const { totalPages, text } = await extractText(pdf, { mergePages: false });
 
             let fullText = "";
-            let pageCount = result.total || 0;
+            const pageCount = totalPages || 0;
 
-            if (Array.isArray(result.pages) && result.pages.length > 0) {
-                pageCount = result.pages.length;
-                fullText = result.pages
-                    .map((page, idx) => `[Page ${page.num || idx + 1}]\n${(page.text || "").trim()}`)
+            if (Array.isArray(text) && text.length > 0) {
+                fullText = text
+                    .map((pageText, idx) => `[Page ${idx + 1}]\n${(pageText || "").trim()}`)
                     .filter((p) => p.length > 0)
                     .join("\n\n");
-            } else if (result.text) {
-                fullText = result.text.trim();
+            } else if (typeof text === "string") {
+                fullText = text.trim();
             }
 
             if (!fullText || fullText.trim().length === 0) {
